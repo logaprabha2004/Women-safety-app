@@ -1,0 +1,420 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(ShieldApp());
+}
+
+class ShieldApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+    );
+  }
+}
+
+// Splash Screen
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.shield, size: 100, color: Colors.purple),
+            Text(
+              'ShiEld',
+              style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => WelcomeScreen()));
+              },
+              child: Text('Get Started'),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Welcome Screen
+class WelcomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          title: Text('Welcome to ShiEld'), backgroundColor: Colors.purple),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Welcome to ShiEld',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text(
+                'ShiEld is all about women safety. This app is designed for peace of mind.'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
+              child: Text('Login'),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RegisterScreen()));
+              },
+              child: Text('Register'),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Login Screen
+class LoginScreen extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login'),
+        backgroundColor: Colors.purple,
+        leading: Container(),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Email'),
+                validator: (value) {
+                  if (value == null || value.isEmpty || !value.endsWith('@gmail.com')) {
+                    return 'Please enter a valid Gmail address';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Password'),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.length < 6) {
+                    return 'Password must be at least 6 characters long';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreen()));
+                  }
+                },
+                child: Text('Login'),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Register Screen
+class RegisterScreen extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Register'),
+        backgroundColor: Colors.purple,
+        leading: Container(),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Email'),
+                validator: (value) {
+                  if (value == null || value.isEmpty || !value.endsWith('@gmail.com')) {
+                    return 'Please enter a valid Gmail address';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Mobile No'),
+                validator: (value) {
+                  if (value == null || value.isEmpty || value.length != 10) {
+                    return 'Please enter a valid mobile number';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Password'),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.length < 6) {
+                    return 'Password must be at least 6 characters long';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreen()));
+                  }
+                },
+                child: Text('Register'),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Home Screen
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        backgroundColor: Colors.purple,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.purple),
+              child: Text('Menu', style: TextStyle(color: Colors.white)),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Profile', style: TextStyle(color: Colors.black)),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()));
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Log Out', style: TextStyle(color: Colors.black)),
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => WelcomeScreen()));
+              },
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.warning), label: 'Emergency'),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Family'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shield), label: 'Features'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Add SOS functionality here
+              },
+              child: Text('SOS'),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () {
+                // Add Voice Activation functionality here
+              },
+              icon: Icon(Icons.mic),
+              label: Text('Voice Activation'),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Profile Screen
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool isLocationSharingEnabled = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+        backgroundColor: Colors.purple,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/profile_image.png'),
+            ),
+            SizedBox(height: 20),
+            Text('Name: Jane Doe'),
+            Text('Age: 25'),
+            Text('Phone: +1234567890'),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.location_on),
+                    SizedBox(width: 8),
+                    Text('Location Sharing:'),
+                  ],
+                ),
+                Switch(
+                  value: isLocationSharingEnabled,
+                  onChanged: (value) {
+                    setState(() {
+                      isLocationSharingEnabled = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            if (isLocationSharingEnabled)
+              Column(
+                children: [
+                  SizedBox(height: 20),
+                  Image.asset('assets/map_image.png'),
+                  Text('Location: Current Location Displayed'),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Family Screen
+class FamilyScreen extends StatefulWidget {
+  @override
+  _FamilyScreenState createState() => _FamilyScreenState();
+}
+
+class _FamilyScreenState extends State<FamilyScreen> {
+  List<Map<String, String>> familyMembers = [];
+
+  void _addFamilyMember() {
+    setState(() {
+      familyMembers.add({'name': 'Family Member', 'location': 'Location'});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Family'),
+        backgroundColor: Colors.purple,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: _addFamilyMember,
+              child: Text('Add Family Member'),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: familyMembers.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(familyMembers[index]['name'] ?? ''),
+                    subtitle: Text(familyMembers[index]['location'] ?? ''),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
